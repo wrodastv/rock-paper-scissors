@@ -9,23 +9,7 @@ function getComputerChoice() {
 
 function getHumanChoice() {
 	let choice;
-	let i = 0;
-	while (i === 0) {
-		choice = prompt('Rock, Paper or Scissor?');
-		choice = choice.toLocaleLowerCase();
-
-		if (choice.localeCompare('rock') === 0) {
-			i = 1;
-		} else if (choice.localeCompare('paper') === 0) {
-			i = 2;
-		} else if (choice.localeCompare('scissor') === 0) {
-			i = 3;
-		} else {
-			i = 0;
-			console.log('You must choose between Rock Paper or Scissor');
-		}
-	}
-	return i;
+	return choice;
 }
 
 function playRound(humanSelection, computerSelection) {
@@ -62,15 +46,16 @@ function playGame() {
 	let gameRounds = 0;
 	let humanChoice;
 	let computerChoice;
-	while (gameRounds < 5) {
-		humanChoice = getHumanChoice();
-		computerChoice = getComputerChoice();
-		playRound(humanChoice, computerChoice);
+	playRound();
+	// while (gameRounds < 5) {
+	// 	humanChoice = getHumanChoice();
+	// 	computerChoice = getComputerChoice();
+	// 	playRound(humanChoice, computerChoice);
 
-		console.log('Computer Score: ' + computerScore);
-		console.log('Your Score: ' + humanScore);
-		gameRounds++;
-	}
+	// 	console.log('Computer Score: ' + computerScore);
+	// 	console.log('Your Score: ' + humanScore);
+	// 	gameRounds++;
+	// }
 }
 
 playGame();

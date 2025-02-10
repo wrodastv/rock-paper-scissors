@@ -1,0 +1,27 @@
+body {
+	background-color: #343434;
+	color: #eaeaea;
+	font-family: 'Roboto', serif;
+	text-align: center;
+}
+
+.choices {
+	margin: 3rem 0;
+	display: flex;
+}
+
+.choices img {
+	margin: 0 auto;
+	width: 30%;
+	padding: 1rem;
+}
+
+.scores {
+	display: flex;
+	justify-content: center;
+}
+
+.scores .player-score,
+.computer-score {
+	width: 50%;
+}
