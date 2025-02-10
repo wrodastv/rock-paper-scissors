@@ -1,74 +1,108 @@
-console.log('Rock, Paper, Scissor Shoot...');
 let humanScore = 0;
 let computerScore = 0;
+let gameRounds = 0;
+let gameOver = false;
 //Computer Choice
 function getComputerChoice() {
 	let i = Math.round(Math.random() * 2) + 1;
 	return i;
 }
 
-function getHumanChoice() {
-	let choice;
-	return choice;
-}
+// Elements
+const bodyEl = document.querySelector('body');
+
+const scoreEl = document.querySelector('.score');
+const originalScoreEl = scoreEl.innerHTML;
+const playerScoreEl = document.querySelector('.player-score');
+const computerScoreEl = document.querySelector('.computer-score');
+const choicesEl = document.querySelector('.choices');
+const originalChoicesEl = choicesEl.innerHTML;
+const buttonYes = document.createElement('button');
+buttonYes.classList.add('btn', 'btn-yes');
+buttonYes.textContent = 'Yes';
+const buttonNo = document.createElement('button');
+buttonNo.classList.add('btn', 'btn-no');
+buttonNo.textContent = 'No';
+let selection = 0;
+const choices = document.querySelectorAll('img');
+choices.forEach((choice) => {
+	choice.addEventListener('click', () => {
+		if (choice.className == 'rock') {
+			selection = 1;
+			playGame();
+		} else if (choice.className == 'paper') {
+			selection = 2;
+			playGame();
+		} else if (choice.className == 'scissor') {
+			selection = 3;
+			playGame();
+		}
+	});
+});
 
 function playRound(humanSelection, computerSelection) {
 	if (humanSelection === computerSelection) {
-		console.log('You have Tied');
+		bodyEl.style.backgroundColor = 'orange';
 	} else if (humanSelection === 1) {
 		if (computerSelection === 2) {
-			console.log('You Lost! Paper beats Rock');
+			bodyEl.style.backgroundColor = 'red';
 			computerScore++;
 		} else if (computerSelection === 3) {
-			console.log('You Won! Rock beats Scissor');
+			bodyEl.style.backgroundColor = 'green';
 			humanScore++;
 		}
 	} else if (humanSelection === 2) {
 		if (computerSelection === 3) {
-			console.log('You Lost! Scissors Beat Paper');
+			bodyEl.style.backgroundColor = 'red';
 			computerScore++;
 		} else if (computerSelection === 1) {
-			console.log('You Won! Paper Beats Rock');
+			bodyEl.style.backgroundColor = 'green';
 			humanScore++;
 		}
 	} else if (humanSelection === 3) {
 		if (computerSelection === 1) {
-			console.log('You Lost! Rock Beats Scissors');
+			bodyEl.style.backgroundColor = 'red';
 			computerScore++;
 		} else if (computerSelection === 2) {
-			console.log('You Won! Scissors beat paper');
+			bodyEl.style.backgroundColor = 'green';
 			humanScore++;
 		}
 	}
 }
 
+function checkWinner() {
+	if (gameRounds === 5) {
+		if (humanScore > computerScore) {
+			choicesEl.textContent =
+				'You Win! Final Score: You: ' + humanScore + ' - Computer: ' + computerScore;
+			scoreEl.textContent = 'Play Again?';
+			scoreEl.append(buttonYes, buttonNo);
+			bodyEl.style.backgroundColor = '#343434';
+			gameOver = true;
+		} else {
+			choicesEl.textContent =
+				'You Lose! Final Score: You: ' + humanScore + ' - Computer: ' + computerScore;
+			scoreEl.textContent = 'Play Again?';
+			scoreEl.append(buttonYes, buttonNo);
+			bodyEl.style.backgroundColor = '#343434';
+			gameOver = true;
+		}
+	}
+}
+
 function playGame() {
-	let gameRounds = 0;
-	let humanChoice;
-	let computerChoice;
-	playRound();
-	// while (gameRounds < 5) {
-	// 	humanChoice = getHumanChoice();
-	// 	computerChoice = getComputerChoice();
-	// 	playRound(humanChoice, computerChoice);
+	const computerChoice = getComputerChoice();
+	playRound(selection, computerChoice);
+	gameRounds++;
+	playerScoreEl.textContent = 'Player: ' + humanScore;
+	computerScoreEl.textContent = 'Computer: ' + computerScore;
 
-	// 	console.log('Computer Score: ' + computerScore);
-	// 	console.log('Your Score: ' + humanScore);
-	// 	gameRounds++;
-	// }
+	checkWinner();
 }
 
-playGame();
-
-console.log('Computer Final Score: ' + computerScore);
-console.log('Your Final Score: ' + humanScore);
-
-if (computerScore > humanScore) {
-	console.log('Computer Wins!!');
-} else if (humanScore > computerScore) {
-	console.log('You Win!!');
-} else {
-	console.log('You Tied. Great Effort');
-}
-
-console.log('Thanks for playing');
+buttonYes.addEventListener('click', () => {
+	window.location.reload();
+});
+buttonNo.addEventListener('click', () => {
+	choicesEl.textContent = "GoodBye! Let's Play Again!";
+});
